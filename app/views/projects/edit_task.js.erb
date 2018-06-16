@@ -1,0 +1,1 @@
+$('.project-list').html("<%= j render '/projects/task_form', task: @task, url: update_project_task_path(id: @project.id, tid: @task.id)%>")

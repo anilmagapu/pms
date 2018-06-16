@@ -1,0 +1,78 @@
+<div>
+<%=link_to "< Back To Projects" , projects_path, class:'btn btn-primary'%>
+<%=link_to "New Task" , new_task_path, remote: true, class:'btn btn-primary'%>
+<br><br>	
+</div>
+<table class='table table-hover'>
+	<tbody>
+	<tr>
+		<td></td>
+		<td>Title</td>
+		<td>Due On</td>
+		<td>Status</td>
+		<td></td>
+		<td></td>
+	</tr>
+		<%tasks.each do |task|%>
+			<tr class=" project-<%= @project.id%>-tasks-<%= task.id%>" taskid="<%=task.id%>">
+				<td><i class='fa fa-chevron-left'></i></td>
+				<td><%= task.title%></td>
+				<td><%= task.due_on%></td>
+				<td>
+				<% if task.is_done %>
+					<input type="checkbox" class="task_status" id= "<%= task.id %>" checked >
+				<% else %>
+					<input type="checkbox" class="task_status" id= "<%= task.id %>" >
+				<% end %>
+					
+</td>
+				<td>
+					<%= link_to "Edit", edit_project_task_path(id: @project.id,tid: task.id), remote: true, class: 'btn btn-primary'%>
+					<%= link_to "Delete", delete_project_task_path(id: @project.id,tid: task.id), method: :delete,remote: true, class: 'btn btn-danger', data: {confirm: "Are you sure to delete this task?"}%>
+				</td>
+				<td><a class= "tasks" taskid="<%=task.id%>">show comments</a></td>
+			</tr>
+			<tr class='comments hide task-<%=task.id%>-comments' >
+				<td colspan="6">
+	                <div class="col-md-8">
+						<!-- <div class="page-header">
+							<h1><small class="pull-right"><%#= task.comments.count%> comments</small> Comments </h1>
+						</div>  -->
+
+						<div class='comments-form'>
+							<%= render '/projects/comment_form', comment: task.comments.new, url: create_task_comment_path(id: @project.id, tid: task.id), remote: true, class: 'btn btn-primary'%>
+						</div>
+						<br>
+						<div class="comments-list">
+						<%= render '/projects/comments_list', comments: task.comments%>
+	                	</div>
+	                </div>
+				</td>
+			</tr>
+
+		<%end%>
+	</tbody>
+</table>
+<script type="text/javascript">
+	// $(document).unbind('click',".tasks",function(){
+		$( document ).ready(function() {
+   
+		$(".tasks").unbind().click(function() {
+  var tid = $(this).attr('taskid')
+		$('.task-'+tid+'-comments').toggleClass('hide')
+});});
+	
+	$('.task_status').change(function() { 
+
+	    $.ajax({
+  method: "POST",
+  url: "/change_task_status",
+  data: { task_id: $(this).attr('id'),value:$(this).is(':checked') }
+});
+  
+ 
+});
+	
+
+
+</script>

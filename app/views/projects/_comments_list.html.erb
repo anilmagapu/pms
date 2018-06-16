@@ -1,0 +1,13 @@
+	<h4>show all comments</h4>
+	<% if comments.present? %>
+	<%comments.each do |comment|%>
+<%  if comment.id.present? %>
+		<div class="row">
+
+		  <p style="margin-left:20px;font-style: italic;"><%= comment.content%> &nbsp;<%=
+		   link_to "delete", delete_comment_path(id:comment.id ), method: :delete,remote: true %> </p>
+
+		  </div>
+		  <%end%>
+	<%end%>
+		<%end%>

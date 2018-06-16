@@ -1,0 +1,10 @@
+<% if @project.errors.any? %>
+$(".notice").remove();
+<% @project.errors.full_messages.each do |message| %>
+$("#helpBlock").append('<div class="notice"><%= escape_javascript(message)%></div>');
+<% end %>
+<% else %>
+ $('.project-list').html("<%= j render '/projects/list', projects: @projects%>")
+<% end %>
+
+

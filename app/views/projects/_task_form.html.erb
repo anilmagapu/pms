@@ -1,0 +1,30 @@
+<%= form_with(model: task, url: url, local: false) do |form| %>
+  <% if task.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</h2>
+
+      <ul>
+      <% task.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class'form-group'>
+    <label>Title</label>
+    <div>
+      <%= form.text_field :title, required: true, class: 'form-control'%>
+    </div>
+  </div>  
+  <div class'form-group'>
+    <label>Due on</label>
+    <div>
+      <%= form.text_field :due_on, "data-provide" => 'datepicker' , class: 'form-control'%>
+    </div>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+

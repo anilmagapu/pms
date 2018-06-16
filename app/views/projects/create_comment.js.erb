@@ -1,0 +1,2 @@
+$(".task-<%=@task.id%>-comments").find('.comments-form').html("<%= j render '/projects/comment_form', comment: @task.comments.new, url: create_task_comment_path(id: @project.id, tid: @task.id), remote: true, class: 'btn btn-primary'%>")
+$(".task-<%=@task.id%>-comments").find('.comments-list').html("<%= j render '/projects/comments_list', comments: @task.comments%>")
